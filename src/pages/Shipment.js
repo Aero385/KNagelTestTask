@@ -1,9 +1,10 @@
 import React from 'react';
+import ShipmentList from '../components/shipmentList/ShipmentList';
 
 const Shipment = () => {
     return (
         <div>
-            shipment
+            <ShipmentList/>
         </div>
     );
 }
