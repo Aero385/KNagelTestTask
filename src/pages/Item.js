@@ -1,9 +1,10 @@
 import React from 'react';
+import ShipmentItem from '../components/shipmentItem/ShipmentItem';
 
 const Table = () => {
     return (
         <div>
-            List
+            <ShipmentItem/>
         </div>
     );
 }

@@ -1,22 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Context } from '../..';
 import ShipmentItem from '../shipmentItem/ShipmentItem';
 import { Table } from 'react-bootstrap';
-
-const columnNames = [
-  { name: 'ORDER NO' },
-  { name: 'DELIVERY TIME' }, 
-  { name: 'CUSTOMER' }, 
-  { name: 'TRACKING NO' }, 
-  { name: 'STATUS' }, 
-  { name: 'CONSIGNEE' },
-  { name: '' },
-];
+import { columnNames } from '../../utils/consts';
+// import data from '../../assets/Shipments.json';
 
 
 const ShipmentList = observer(() => {
-const {shipment} = useContext(Context)
+const {shipment} = useContext(Context)  // 1 option
+// const [item, setItem] = useState(data) 
   return (
     <Table striped bordered hover>
         <thead>
@@ -29,8 +22,8 @@ const {shipment} = useContext(Context)
             </tr>
         </thead>
         <tbody>
-            {shipment.shipment.map(item => 
-                <ShipmentItem key={item.id} shipment={item}/>
+            {shipment.shipment.map(item =>                       
+                <ShipmentItem key={item.orderNo} shipment={item}/>
             )}
         </tbody>
     </Table>
