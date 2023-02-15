@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import './styles.css';
 
-const ShipmentItem = ({shipment}) => {
+
+
+const ShipmentItem = ({shipment, onDelete}) => {
 
   const [show, setShow] = useState(false)
   const [lastShipment, setOldShipment] = useState(shipment);
@@ -20,6 +23,9 @@ const ShipmentItem = ({shipment}) => {
     setUpdatedShipment(lastShipment)
     modalClose()
   }
+  const handleDelete = () => {
+    onDelete(shipment.orderNo)
+  }
 
   return(
   <>
@@ -30,53 +36,54 @@ const ShipmentItem = ({shipment}) => {
       <td>{updatedShipment.trackingNo}</td>
       <td>{updatedShipment.status}</td>
       <td>{updatedShipment.consignee}</td>
-      <td>
-      <Button onClick={modalShow} variant="info" className='mr-2'>Update</Button>
-      <Button onClick={() => shipment.filter(s => s.orderNo !== shipment.orderNo)} variant="danger">Delete</Button>
+      <td className='btn-container'>
+      <Button onClick={modalShow} variant='info' className='mr-2'>Update</Button>
+      <Button onClick={handleDelete} variant='danger'>Delete</Button>
       </td>
     </tr>
     <Modal show={show} onHide={modalClose}>
-        <Modal.Header closeButton>
+        <Modal.Header >
           <Modal.Title>Update Shipment</Modal.Title>
+          <Button onClick={handleClose} variant="dark">X</Button>
         </Modal.Header>
-        <Modal.Body>
-        <form>
+        <Modal.Body style={{padding: 0}}>
+        <form className='shipment-form'>
             <table>
-              <tbody>
+              <tbody className='shipment-table'>
                 <tr>
-                  <td>Order No:</td>
-                  <td><input type="text" value={updatedShipment.orderNo} onChange={e => setUpdatedShipment({ ...updatedShipment, orderNo: e.target.value })} /></td>
+                  <td className='form-label'>Order No:</td>
+                  <td className='form-input'><input type="text" value={updatedShipment.orderNo} onChange={e => setUpdatedShipment({ ...updatedShipment, orderNo: e.target.value })} /></td>
+                </tr >
+                <tr>
+                  <td className='form-label'>Date:</td>
+                  <td className='form-input'><input type='text' value={updatedShipment.date} onChange={e => setUpdatedShipment({ ...updatedShipment, date: e.target.value })} /></td>
                 </tr>
-                    <tr>
-                      <td>Date:</td>
-                      <td><input type="text" value={updatedShipment.date} onChange={e => setUpdatedShipment({ ...updatedShipment, date: e.target.value })} /></td>
-                    </tr>
-                    <tr>
-                      <td>Customer:</td>
-                      <td><input type="text" value={updatedShipment.customer} onChange={e => setUpdatedShipment({ ...updatedShipment, customer: e.target.value })} /></td>
-                    </tr>
-                    <tr>
-                      <td>trackingNo:</td>
-                      <td><input type="text" value={updatedShipment.trackingNo} onChange={e => setUpdatedShipment({ ...updatedShipment, trackingNo: e.target.value })} /></td>
-                    </tr>
-                    <tr>
-                      <td>Status:</td>
-                      <td><input type="text" value={updatedShipment.status} onChange={e => setUpdatedShipment({ ...updatedShipment, status: e.target.value })} /></td>
-                    </tr>
-                    <tr>
-                      <td>Consignee:</td>
-                      <td><input type="text" value={updatedShipment.consignee} onChange={e => setUpdatedShipment({ ...updatedShipment, consignee: e.target.value })} /></td>
-                    </tr>
+                <tr>
+                  <td className='form-label'>Customer:</td>
+                  <td className='form-input'><input type='text' value={updatedShipment.customer} onChange={e => setUpdatedShipment({ ...updatedShipment, customer: e.target.value })} /></td>
+                </tr>
+                <tr>
+                  <td className='form-label'>trackingNo:</td>
+                  <td className='form-input'><input type='text' value={updatedShipment.trackingNo} onChange={e => setUpdatedShipment({ ...updatedShipment, trackingNo: e.target.value })} /></td>
+                </tr>
+                <tr>
+                  <td className='form-label'>Status:</td>
+                  <td className='form-input'><input type='text' value={updatedShipment.status} onChange={e => setUpdatedShipment({ ...updatedShipment, status: e.target.value })} /></td>
+                </tr>
+                <tr>
+                  <td className='form-label'>Consignee:</td>
+                  <td className='form-input'><input type='text' value={updatedShipment.consignee} onChange={e => setUpdatedShipment({ ...updatedShipment, consignee: e.target.value })} /></td>
+                </tr>
               </tbody>
             </table>
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
+          <Button variant='primary' onClick={handleUpdate}>
+            Save
           </Button>
-          <Button variant="primary" onClick={handleUpdate}>
-            Update
+          <Button variant='secondary' onClick={handleClose}>
+            Cancel
           </Button>
         </Modal.Footer>
       </Modal>
